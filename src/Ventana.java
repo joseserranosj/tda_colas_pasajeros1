@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collections;
+import java.util.List;
 
 public class Ventana {
     private JPanel principal;
@@ -28,8 +30,11 @@ public class Ventana {
                            ex.getMessage());
                 }
                 JOptionPane.showMessageDialog(null,"Agregado correctamente");
-                txtListado.setText(cola1.toString());
+                //txtListado.setText(cola1.toString());
+                mostrarTexto();
             }
+
+
         });
         btnAtender.addActionListener(new ActionListener() {
             @Override
@@ -38,7 +43,8 @@ public class Ventana {
                     Pasajero atendido=cola1.extraer();
                     atendido.setCheckin(true);
                     txtPasajero.setText("Atendido: "+atendido);
-                    txtListado.setText(cola1.toString());
+                    //txtListado.setText(cola1.toString());
+                    mostrarTexto();
                 } catch (Exception ex) {
                    JOptionPane.showMessageDialog(null,
                            ex.getMessage());
@@ -50,13 +56,22 @@ public class Ventana {
             public void actionPerformed(ActionEvent e) {
                 try {
                     txtPasajero.setText("En atención: "+cola1.frente());
-                    txtListado.setText(cola1.toString());
+                    //txtListado.setText(cola1.toString());
+                    mostrarTexto();
                 } catch (Exception ex) {
                    JOptionPane.showMessageDialog(null,
                            ex.getMessage());
                 }
             }
         });
+    }
+    public void mostrarTexto(){
+        List<Pasajero> resultado = cola1.listar();
+        Collections.sort(resultado);
+        txtListado.setText("");
+        for(Pasajero p:resultado){
+            txtListado.append(p.toString());
+        }
     }
 
     public static void main(String[] args) {
